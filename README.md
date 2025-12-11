@@ -1,7 +1,16 @@
 # Web-Dev-Final-Project-Team-13
 
-Run the following commands to start the server
-cd Server
-node server.js
+How to run:
 
-Then go to localhost:5000 in your browser to view the page
+Open 2 terminals, one for frontend and the other for backend, 
+making sure both start in the root project directory
+
+Frontend terminal:
+cd Client
+npm install //If node_modules and package-lock are included and up to date, skip this step
+nmp start
+
+Backend terminal:
+cd Server
+npm install //Same deal as with the frontend terminal npm install
+node server.js
