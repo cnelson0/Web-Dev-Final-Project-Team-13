@@ -1,20 +1,23 @@
+//Import relevant dependencies
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../services/api';
 import TransactionList from '../components/TransactionList';
 
 function EditPage() {
+  
+  //Establish important values for later
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
   const [form, setForm] = useState({ description: '', amount: '', category: '' });
   const [error, setError] = useState('');
   const [defaultUser, setDefaultUser] = useState(null);
 
-  // Load transactions for a given user ID
+  //Load transactions for a given user ID
   const loadTransactions = (userId) => {
     API.getTransactions()
       .then(data => {
-        // Filter for this user just in case backend returns multiple users
+        //Filter for this user just in case backend returns multiple users
         const userTransactions = data.filter(tx => tx.user?._id === userId);
         setTransactions(userTransactions || []);
       })
@@ -24,22 +27,23 @@ function EditPage() {
       });
   };
 
-  // Fetch default user on mount
+  //Fetch default user on mount
   useEffect(() => {
     API.getDefaultUser()
       .then(user => setDefaultUser(user))
       .catch(err => console.error(err));
   }, []);
 
-  // Load transactions whenever defaultUser is set
+  //Load transactions whenever defaultUser is set
   useEffect(() => {
     if (defaultUser) loadTransactions(defaultUser._id);
   }, [defaultUser]);
 
-  // Submit new transaction
+  //Submit new transaction
   const submit = () => {
     if (!defaultUser) return;
 
+    //Set up the payload to send to database
     const payload = {
       description: form.description,
       amount: parseFloat(form.amount),
@@ -48,6 +52,7 @@ function EditPage() {
       user: defaultUser._id
     };
 
+    //Add transaction to database
     API.addtransaction(payload)
       .then(() => {
         setForm({ description: '', amount: '', category: '' });
@@ -60,13 +65,14 @@ function EditPage() {
       });
   };
 
-  // Delete transaction
+  //Delete transaction from database
   const remove = (id) => {
     API.deleteTransaction(id)
       .then(() => loadTransactions(defaultUser._id))
       .catch(err => console.error(err.response?.data || err));
   };
 
+  //Return the styling and components for the EditPage
   return (
     <div style={{ padding: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

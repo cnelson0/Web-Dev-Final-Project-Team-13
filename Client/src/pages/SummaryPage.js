@@ -1,27 +1,32 @@
+//Import relevant dependencies and register the chart
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../services/api';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip);
 
 function SummaryPage() {
+
+  //Establish important values for later
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
 
+  //Load the user transactions in order to display them
   useEffect(() => {
     API.getTransactions()
       .then(data => setTransactions(data || []))
       .catch(err => console.error(err));
   }, []);
 
+  //Calculate the total spending per category
   const categoryTotals = transactions.reduce((acc, t) => {
     if (!acc[t.category]) acc[t.category] = 0;
     acc[t.category] += t.amount;
     return acc;
   }, {});
 
+  //Configure the data for the chart
   const data = {
     labels: Object.keys(categoryTotals),
     datasets: [
@@ -33,6 +38,7 @@ function SummaryPage() {
     ],
   };
 
+  //Styling for the chart
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -50,6 +56,7 @@ function SummaryPage() {
     },
   };
 
+  //Return the styling and components for the SummaryPage
   return (
     <div style={{ padding: 20 }}>
       <button className="btn" onClick={() => navigate('/')}>Back</button>

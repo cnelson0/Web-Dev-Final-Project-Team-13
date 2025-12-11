@@ -1,9 +1,11 @@
+/*The container for all transaction boxes*/
 .transaction-list {
     padding: 20px;
     max-width: 700px;
     text-align: left;
 }
 
+/*An individual box with transaction info*/
 .transaction-item {
     background: white;
     margin-bottom: 12px;
@@ -17,27 +19,27 @@
     transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
+/*Override the default white text*/
 .transaction-item,
 .transaction-item * {
   color: black !important;
 }
 
-
+/*Hover animation for the transaction-item boxes*/
 .transaction-item:hover {
     background: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px black;
 }
 
+/*Styling for the amount values in each transaction-item box*/
 .transaction-amount {
     font-weight: bold;
     font-size: 1.1rem;
 }
-
 .transaction-amount.positive {
     color: green; /* income 8*/
 }
-
 .transaction-amount.negative {
     color: crimson; /* spending */
 }
