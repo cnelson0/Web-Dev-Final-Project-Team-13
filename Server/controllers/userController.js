@@ -101,3 +101,15 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.getDefaultUser = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: 'john.doe@example.com' });
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'Default user not found' });
+    }
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

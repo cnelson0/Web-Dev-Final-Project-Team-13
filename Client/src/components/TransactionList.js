@@ -1,23 +1,29 @@
-import React from "react";
+import React from 'react';
 import './transactions.css';
 
-function TransactionList({ transactions, onSelect }) {
-return (
+const TransactionList = ({ transactions = [], remove }) => {
+  if (!Array.isArray(transactions)) {
+    console.error("TransactionList received non-array:", transactions);
+    return <p>Error loading transactions.</p>;
+  }
 
-<div className="transaction-list">
-    {transactions.map((t) => (
-<div
-key={t._id}
-className="transaction-item"
-onClick={() => onSelect(t)}
->
-<span>{t.description}</span>
-<span style={{ fontWeight: 'bold', color: t.amount< 0 ? 'red' : 'green' }}>
-${t.amount}
-</span>
-</div>
-))}
-</div>
-);
-}
+  return (
+    <div className="transaction-list">
+      {transactions.length === 0 ? (
+        <p>No transactions yet.</p>
+      ) : (
+        transactions.map((t) => (
+          <div key={t._id} className="transaction-item">
+            <div>
+              <strong>{t.description}</strong> — ${t.amount.toFixed(2)} ({t.type}) [{t.category}]
+            </div>
+            {/* Only show delete button if remove function is provided */}
+            {remove && <button style={{ marginLeft: 10 }} onClick={() => remove(t._id)}>Delete</button>}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
 export default TransactionList;

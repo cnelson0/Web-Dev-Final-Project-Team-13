@@ -1,36 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as API from '../services/api'
+import * as API from '../services/api';
 import TransactionList from '../components/TransactionList';
 
-
 function HomePage() {
-const navigate = useNavigate();
-const [transactions, setTransactions] = useState([]);
+  const navigate = useNavigate();
+  const [transactions, setTransactions] = useState([]);
+  const [defaultUser, setDefaultUser] = useState(null);
 
-useEffect(() => {
-API.getTransactions()
-.then((res) => setTransactions(res.data))
-.catch(() => setTransactions([]));
-}, []);
+  // Load default user and transactions
+  useEffect(() => {
+    API.getDefaultUser()
+      .then(user => {
+        setDefaultUser(user);
+        API.getTransactions()
+          .then(data => setTransactions(data || []))
+          .catch(err => {
+            console.error(err);
+            setTransactions([]);
+          });
+      })
+      .catch(err => {
+        console.error(err);
+        setTransactions([]);
+      });
+  }, []);
 
+  return (
+    <div style={{ padding: 20 }}>
+      {/* Centered header and buttons */}
+      <div style={{ textAlign: 'center', marginBottom: 30 }}>
+        <h1>Home Page</h1>
+        <button onClick={() => navigate('/edit')} style={{ marginRight: 10 }}>
+          Edit Transactions
+        </button>
+        <button onClick={() => navigate('/summary')}>View Summary</button>
+      </div>
 
-return (
-<div style={{ padding: 20 }}>
-<h1>Budget Tracker</h1>
-
-<button onClick={() => navigate('/edit')}>Add / Edit Transactions</button>
-<button onClick={() => navigate('/summary')} style={{ marginLeft: 10 }}>
-Generate Summary
-</button>
-
-<h2 style={{ marginTop: 20 }}>Recent Transactions</h2>
-<TransactionList
-transactions={transactions}
-onSelect={(t) => alert(`Description: ${t.description}\nAmount: ${t.amount}`)}
-/>
-</div>
-);
+      {/* Transaction history */}
+      <h2>Transaction History</h2>
+      {transactions.length === 0 && <div>No transaction history.</div>}
+      <div style={{ textAlign: 'left' }}>
+        <TransactionList transactions={transactions} />
+      </div>
+    </div>
+  );
 }
 
 export default HomePage;
