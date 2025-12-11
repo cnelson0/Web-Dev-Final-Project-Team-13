@@ -1,0 +1,47 @@
+/* Global */
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Background & typography */
+  body {
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background: darkslategrey;
+    color: white;
+  }
+  
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Page container */
+  .page-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  /* Buttons */
+  .btn {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  
+  .btn:hover {
+    background: blue;
+    transform: translateY(-1px);
+  }
+  
+  .btn:active {
+    transform: translateY(0);
+    background: lightskyblue;
+  }
