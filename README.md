@@ -18,7 +18,7 @@ Additional Resources
 
 Slideshow: https://1drv.ms/p/c/54785478b28655c6/IQAVLM2x2wEgT4Vug5OSxOchAVW5pEvxCSLWMPUOnlSmfzA?e=rHegDH
 
-YouTube Walkthrough: [URL here]
+YouTube Walkthrough: https://youtu.be/45AlW70c_M8?si=KfrZIVodFBVrq7R1
 
 ---------------------------------------------------------------------
 
